@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace HTTP
 {
@@ -22,7 +23,15 @@ namespace HTTP
                 StreamReader leitor = new StreamReader(stream);//Coloquei a resposta dentro de um leitor
                 object dados = leitor.ReadToEnd();//Li a resposta e transformei em uma string e passsei para a variavel dados
 
-                Console.WriteLine(dados.ToString());//Exibindo no Console
+                //Console.WriteLine(dados.ToString());//Exibindo no Console
+                //Estamos recebendo um tipo List, se colocarmos apenas como uma variavel do tipo tarefas.
+                List<Tarefa> tarefas = JsonConvert.DeserializeObject<List<Tarefa>>(dados.ToString());
+
+                foreach(Tarefa tarefa in tarefas)
+                {
+                    tarefa.Exibir();
+                }
+                //Console.WriteLine(tarefas);
 
                 stream.Close();
                 resposta.Close();
